@@ -1,5 +1,5 @@
 [project]
-name = "ai-assistant-api"
+name = "openchat-api"
 version = "1.0.0"
 description = "FastAPI backend for the AI Assistant: local Ollama models first, cloud providers as fallback."
 readme = "README.md"
@@ -12,6 +12,7 @@ dependencies = [
     "openai>=3.19",
     "anthropic>=1.8",
     "httpx>=0.28",
+    "livekit-api>=1.2.1",
 ]
 
 [dependency-groups]
