@@ -6,7 +6,7 @@ export const APP_CONFIG = {
   appName: "OpenChat",
   appDescription: "OpenChat AI Assistant",
   user: {
-    name: "Rizwan",
+    name: "Abdul",
     subtitle: "Workspace",
   },
 } as const;

@@ -3,6 +3,9 @@
 import { useMemo, useState } from "react";
 import {
   AudioLinesIcon,
+  ImageIcon,
+  LibraryIcon,
+  PaperclipIcon,
   CheckIcon,
   EllipsisIcon,
   MonitorIcon,
@@ -13,6 +16,7 @@ import {
   SunIcon,
   Trash2Icon,
 } from "lucide-react";
+import Link from "next/link";
 import { useTheme } from "next-themes";
 
 import { Button } from "@/components/ui/button";
@@ -58,6 +62,7 @@ export function AppSidebar({
   onClearAll,
   onCollapse,
   apiOnline,
+  showLibrary,
 }: {
   conversations: Conversation[];
   activeId: string | null;
@@ -67,6 +72,8 @@ export function AppSidebar({
   onClearAll: () => void;
   onCollapse?: () => void;
   apiOnline: boolean;
+  /** Link to the Library pages (when the API has files on). */
+  showLibrary?: boolean;
 }) {
   const [query, setQuery] = useState("");
   const { theme, setTheme } = useTheme();
@@ -125,6 +132,17 @@ export function AppSidebar({
             className="border-transparent bg-transparent pl-8 shadow-none hover:bg-sidebar-accent focus-visible:bg-background dark:bg-transparent"
           />
         </div>
+        {showLibrary && (
+          <Button asChild variant="ghost" className="justify-start font-normal">
+            <Link href="/library">
+              <LibraryIcon />
+              Library
+              <span className="ml-auto rounded-full border px-1.5 py-px text-[10px] font-medium text-muted-foreground">
+                Owner
+              </span>
+            </Link>
+          </Button>
+        )}
       </div>
 
       <nav aria-label="Conversations" className="min-h-0 flex-1 overflow-y-auto px-2 pb-3">
@@ -153,6 +171,18 @@ export function AppSidebar({
                       {c.messages.some((m) => m.voice) && (
                         <AudioLinesIcon
                           aria-label="Voice chat"
+                          className="size-3.5 shrink-0 text-muted-foreground"
+                        />
+                      )}
+                      {c.messages.some((m) => m.files?.length || m.collections?.length) && (
+                        <PaperclipIcon
+                          aria-label="Uses files"
+                          className="size-3.5 shrink-0 text-muted-foreground"
+                        />
+                      )}
+                      {c.messages.some((m) => m.images?.length) && (
+                        <ImageIcon
+                          aria-label="Has photos"
                           className="size-3.5 shrink-0 text-muted-foreground"
                         />
                       )}
